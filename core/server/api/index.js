@@ -18,6 +18,7 @@ var _              = require('lodash'),
     clients        = require('./clients'),
     themes         = require('./themes'),
     users          = require('./users'),
+    search         = require('./search'),
     slugs          = require('./slugs'),
     authentication = require('./authentication'),
     uploads        = require('./upload'),
@@ -239,7 +240,8 @@ module.exports = {
     users: users,
     slugs: slugs,
     authentication: authentication,
-    uploads: uploads
+    uploads: uploads,
+    search: search
 };
 
 /**

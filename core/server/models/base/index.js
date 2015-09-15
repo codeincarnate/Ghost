@@ -19,6 +19,7 @@ var _          = require('lodash'),
     validation = require('../../data/validation'),
     baseUtils  = require('./utils'),
     pagination = require('./pagination'),
+    lv         = require('./search'),
 
     ghostBookshelf;
 
@@ -62,6 +63,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         }
 
         this.on('creating', this.creating, this);
+        this.on('saved', this.saved);
         this.on('saving', function onSaving(model, attributes, options) {
             return Promise.resolve(self.saving(model, attributes, options)).then(function then() {
                 return self.validate(model, attributes, options);
@@ -71,6 +73,18 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     validate: function validate() {
         return validation.validateSchema(this.tableName, this.toJSON());
+    },
+
+    saved: function (model, attrs, options) {
+
+        // TODO: Need to change this to test for the model type
+        // since we don't want to index all models
+        if (typeof model.attributes !== 'undefined' && model.attributes !== null) {
+            var obj = model.attributes;
+
+            lv.put(obj.uuid, obj);
+        }
+        
     },
 
     creating: function creating(newObj, attr, options) {

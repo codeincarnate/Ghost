@@ -89,6 +89,9 @@ apiRoutes = function apiRoutes(middleware) {
     );
     router.post('/authentication/revoke', api.http(api.authentication.revoke));
 
+    // Search
+    router.get('/search', api.search)
+
     // ## Uploads
     router.post('/uploads', middleware.busboy, api.http(api.uploads.add));
 
